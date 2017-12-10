@@ -38,6 +38,7 @@
 * Ensure higher levels of utilization and efficiency
 ---
 ## The Changing Face of the Datacenter
+
 ![The Changing Face of the Datacenter](./images/image-01-01.png)
 
 ## What is Kubernetes?
@@ -52,6 +53,7 @@
 	* Rolling updates, canary deploys, and blue-green deployments
 ---
 ## Kubernetes Architecture
+
 ![Kubernetes Architecture](./images/image-01-02.png)
 
 ## Configuring Kubernetes Environment
@@ -255,10 +257,15 @@ Switched to context "mycluster.icp".
 Given that I have changed my environment, it will reflect my mycluster.icp cluster, which has four nodes.
 But before I can do this I need to login to ICP first and get the right set of credentials.
 https://192.168.27.100:8443/oidc/login.jsp
+
 ![IBM Cloud Private](./images/image-01-03.png)
+
 Get the Configure client details.
+
 ![Configure client](./images/image-01-04.png)
+
 I receive the details, which I need to paste onto my CLI for it to start my session.
+
 ![Configure kubectl](./images/image-01-05.png)
 
 ```console
@@ -299,6 +306,7 @@ $ kubectl config use-context "minikube"
 Switched to context "minikube".
 ```
 Here is the list of commands that we plan to test.
+
 ![demo](./images/image-01-06.png)
 
 Let's start:
@@ -376,7 +384,9 @@ Commercial support is available at
 </html>
 ```
 Minikube provides a great web-page to access/visualize the features of Kubernetes, you simple have to type:
-`$ minikube dashboard`
+```console
+$ minikube dashboard`
+```
 
 ![Access webpage](./images/image-01-08.png)
 
@@ -389,6 +399,6 @@ Minikube provides a great web-page to access/visualize the features of Kubernete
 
 
 Reference:
-[Kubernetes Webinar Series - Getting Started with Kubernetes](https://www.youtube.com/watch?v=_vHTaIJm9uY&index=1&list=PLF3s2WICJlqOiymMaTLjwwHz-MSVbtJPQ)
-[An Introduction to Kubernetes](https://www.digitalocean.com/community/tutorials/an-introduction-to-kubernetes) 
-[Kubernetes – Core Concepts and Constructs](http://cdn2.hubspot.net/hubfs/115489/Getting_Started_with_Kubernetes_Sample_Chapter.pdf?t=1449546307078)
+* [Kubernetes Webinar Series - Getting Started with Kubernetes](https://www.youtube.com/watch?v=_vHTaIJm9uY&index=1&list=PLF3s2WICJlqOiymMaTLjwwHz-MSVbtJPQ)
+* [An Introduction to Kubernetes](https://www.digitalocean.com/community/tutorials/an-introduction-to-kubernetes) 
+* [Kubernetes – Core Concepts and Constructs](http://cdn2.hubspot.net/hubfs/115489/Getting_Started_with_Kubernetes_Sample_Chapter.pdf?t=1449546307078)
