@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: red
+spec:
+  selector:
+    color: red
+  type: NodePort
+  ports:
+    - name: http
+      nodePort: 31001
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: green
+spec:
+  selector:
+    color: green
+  type: NodePort
+  ports:
+    - name: http
+      nodePort: 31002
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blue
+spec:
+  selector:
+    color: blue
+  type: NodePort
+  ports:
+    - name: http
+      nodePort: 31003
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yellow
+spec:
+  selector:
+    color: yellow
+  type: NodePort
+  ports:
+    - name: http
+      nodePort: 31004
+      port: 80
+      targetPort: 8080
+      protocol: TCP

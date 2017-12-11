@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: red
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        color: red
+    spec:
+      containers:
+        - image: ernesen/node:v1
+          name: red
+          env:
+            - name: "COLOR"
+              value: "red"
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: green
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        color: green
+    spec:
+      containers:
+        - image: ernesen/node:v1
+          name: green
+          env:
+            - name: "COLOR"
+              value: "green"
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: blue
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        color: blue
+    spec:
+      containers:
+        - image: ernesen/node:v1
+          name: blue
+          env:
+            - name: "COLOR"
+              value: "blue"
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: yellow
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        color: yellow
+    spec:
+      containers:
+        - image: ernesen/node:v1
+          name: yellow
+          env:
+            - name: "COLOR"
+              value: "yellow"
+          ports:
+            - containerPort: 8080

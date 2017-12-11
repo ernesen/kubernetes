@@ -507,3 +507,6 @@ We have a series of inserts to issue to populate the database.
 Reference:
 * [Kubernetes Webinar Series - A Closer Look at Pods and Replicas](https://www.youtube.com/watch?v=CU-nNEY6Hfg&index=3&list=PLF3s2WICJlqOiymMaTLjwwHz-MSVbtJPQ)
 
+<!--
+https://github.com/janakiramm/Kubernetes-multi-container-pod
+-->

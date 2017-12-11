@@ -9,3 +9,5 @@ Learning Kubernetes from Kubernetes Webinar Series - hosted by Janakiram &amp; A
 
 [03 - Kubernetes Webinar Series - A Closer Look at Pods and Replicas](./03-lesson/README.md)
 
+[04 - Understanding Service Discovery in Kubernetes](./04-lesson/README.md)
+
