@@ -11,3 +11,5 @@ Learning Kubernetes from Kubernetes Webinar Series - hosted by Janakiram &amp; A
 
 [04 - Understanding Service Discovery in Kubernetes](./04-lesson/README.md)
 
+[05 - Kubernetes Webinar Series - Scaling and Managing Deployments](./05-lesson/README.md)
+
