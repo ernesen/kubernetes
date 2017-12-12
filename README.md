@@ -13,3 +13,4 @@ Learning Kubernetes from Kubernetes Webinar Series - hosted by Janakiram &amp; A
 
 [05 - Kubernetes Webinar Series - Scaling and Managing Deployments](./05-lesson/README.md)
 
+[06 - Kubernetes Webinar Series - Dealing with Storage and Persistence](./06-lesson/README.md)

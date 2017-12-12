@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata: 
+  name: my-pv
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  nfs:
+    path: /opt/data/web
+    server: 192.168.99.101  
