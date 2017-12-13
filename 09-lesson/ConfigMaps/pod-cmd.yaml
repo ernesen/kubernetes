@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-cmd
+spec:
+  containers:
+    - name: test-container
+      image: gcr.io/google_containers/busybox
+      command: ["/bin/sh", "-c", "echo Error Level: $(LOG_LEVEL) - Error Location $(LOG_LOCATION)" ]
+      env:
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: log-config
+              key: log.level 
+        - name: LOG_LOCATION
+          valueFrom:
+            configMapKeyRef:
+              name: log-config
+              key: log.location 
+  restartPolicy: Never  
