@@ -21,3 +21,5 @@ Learning Kubernetes from Kubernetes Webinar Series - hosted by Janakiram &amp; A
 -->
 
 [09 - Kubernetes Webinar Series - Using ConfigMaps & Secrets in Kubernetes](./09-lesson/README.md)
+
+[10 - Kubernetes Webinar Series - Exploring Daemon Sets and Jobs](./10-lesson/README.md)

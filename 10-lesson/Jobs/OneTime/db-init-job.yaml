@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-init
+  labels:
+    app: myapp
+    tier: data
+spec:
+  template:
+    metadata:
+      name: db-init
+    spec:
+      containers:
+        - name: db-init
+          image: janakiramm/db-init
+          env:
+            - name: USERNAME
+              value: root
+            - name: PASSWORD
+              value: password
+            - name: HOST
+              value: mysql
+            - name: PORT
+              value: "3306" 
+      restartPolicy: Never 
