@@ -1,0 +1,18 @@
+
+{
+    "kind": "Service",
+    "apiVersion": "v1beta3",
+    "metadata": {
+        "name": "service-nginx",
+        "labels": {
+            "name": "service-nginx"
+        }
+    },
+    "spec": {
+        "selector": {
+            "name": "pod-nginx"
+        },        
+        "ports": [{"port":80, "targetPort": "http-port"}],
+        "publicIPs":["%NODE_PUBLIC_IP%"]
+    }
+}
