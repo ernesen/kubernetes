@@ -5,7 +5,10 @@ metadata:
 spec:
   containers:
   - name: redis
-    image: kubernetes/redis:v1
+    image: redis:5.0.5-alpine
+    command:
+      - redis-server
+      - /myredis/redis.conf
     env: 
     - name:  MASTER
       value: "true"
@@ -17,7 +20,7 @@ spec:
     volumeMounts:
     - mountPath: /redis-master-data
       name: data 
-    - mountPath: /redis-master 
+    - mountPath: /myredis
       name: config
   volumes:
     - name: data 

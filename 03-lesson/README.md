@@ -1,6 +1,7 @@
 # Kubernetes Webinar Series - A Closer Look at Pods and Replicas
 
 ## Objectives
+
 * Understand the concept of Pods
 * Explore multi-container Pods
 * Closer look at the use cases and scenarios for multi-container pods
@@ -8,6 +9,7 @@
 
 ---
 ## What is Pod?
+
 * A group one or more containers that are always co-located and co-scheduled that share the context
 * Containers in a pod share the same IP address, ports, hostname and storage
 * Modeled like a virtual machine:
@@ -381,31 +383,19 @@ NAME        READY     STATUS              RESTARTS   AGE
 mysql       1/1       Running             0          1h
 web-5cds7   0/2       ContainerCreating   0          39s
 web-7scl5   0/2       ContainerCreating   0          39s
-web-ch8jz   0/2       ContainerCreating   0          39s
-web-h7kwd   0/2       ContainerCreating   0          39s
-web-j4zkj   0/2       ContainerCreating   0          39s
-web-msjqq   0/2       ContainerCreating   0          39s
-web-ncrjd   0/2       ContainerCreating   0          39s
-web-rcmd9   0/2       ContainerCreating   0          39s
-web-zsz2z   0/2       ContainerCreating   0          39s
 web1        2/2       Running             0          1h
 $ kubectl get po
 NAME        READY     STATUS    RESTARTS   AGE
 mysql       1/1       Running   0          1h
 web-5cds7   2/2       Running   0          1m
 web-7scl5   2/2       Running   0          1m
-web-ch8jz   2/2       Running   0          1m
-web-h7kwd   2/2       Running   0          1m
-web-j4zkj   2/2       Running   0          1m
-web-msjqq   2/2       Running   0          1m
-web-ncrjd   2/2       Running   0          1m
-web-rcmd9   2/2       Running   0          1m
-web-zsz2z   2/2       Running   0          1m
 web1        2/2       Running   0          1h
 ```
-You would have noticed that 9 new pods were created with arbitrary name attached to web, it's simply because the replicationcontroller file had stated 10 replicas. Mind you the replicationcontroller has spawn 9 pods, given that web1 already existed, now, how did it know that web1 was part of the replicationcontroller, this is due to the labels and selectors; it matches the same metadata under the labels in the web-rc.yaml file.
+
+You would have noticed that 2 new pods were created with arbitrary name attached to web, it's simply because the replicationcontroller file had stated 3 replicas. Mind you the replicationcontroller has spawn 2 pods, given that web1 already existed, now, how did it know that web1 was part of the replicationcontroller, this is due to the labels and selectors; it matches the same metadata under the labels in the web-rc.yaml file.
 
 Let's try to delete one of the pods and see what happens, previously when we simply killed the pod it just got deleted, now this is different, as the pods are associated with the replicationcontroller and replicationcontroller has a desired number and that number must be maintained at all time.
+
 ```console
 $ kubectl delete pod web-5cds7
 pod "web-5cds7" deleted
@@ -413,48 +403,28 @@ $ kubectl get po
 NAME        READY     STATUS              RESTARTS   AGE
 mysql       1/1       Running             0          2h
 web-5cds7   0/2       Terminating         0          17m
-web-7scl5   2/2       Running             0          17m
-web-ch8jz   2/2       Running             0          17m
 web-djv98   0/2       ContainerCreating   0          4s
-web-h7kwd   2/2       Running             0          17m
-web-j4zkj   2/2       Running             0          17m
-web-msjqq   2/2       Running             0          17m
-web-ncrjd   2/2       Running             0          17m
-web-rcmd9   2/2       Running             0          17m
-web-zsz2z   2/2       Running             0          17m
 web1        2/2       Running             0          1h
 ```
+
 While pod web-5cds7 is getting deleted at the same time a new pod web-djv98 is being generated in making sure that the total pod available remains at 10, as 10 is the desired number of pods that was declared in the web-rc.yaml file.
 
 We can also use the command line to scale the pod via replicationcontroller, as shown below.
+
 ```console
-$ kubectl scale rc web --replicas=20
+$ kubectl scale rc web --replicas=4
 replicationcontroller "web" scaled
 $ kubectl get po
 NAME        READY     STATUS              RESTARTS   AGE
 mysql       1/1       Running             0          2h
-web-7scl5   2/2       Running             0          26m
-web-c9pfc   0/2       Pending             0          3s
-web-ch8jz   2/2       Running             0          26m
-web-djv98   2/2       Running             0          9m
+web-5cds7   0/2       Running         0          17m
+web-djv98   0/2       Running             0          4s
 web-dp86d   0/2       ContainerCreating   0          3s
-web-h7kwd   2/2       Running             0          26m
-web-hcnwj   0/2       ContainerCreating   0          4s
-web-j4zkj   2/2       Running             0          26m
-web-jdw2j   0/2       ContainerCreating   0          4s
-web-k5hq7   0/2       ContainerCreating   0          3s
-web-kbf4j   0/2       ContainerCreating   0          3s
-web-m9phx   0/2       ContainerCreating   0          3s
-web-mjnht   0/2       ContainerCreating   0          3s
-web-msjqq   2/2       Running             0          26m
-web-ncrjd   2/2       Running             0          26m
-web-rcmd9   2/2       Running             0          26m
-web-rhq7t   0/2       ContainerCreating   0          4s
-web-zsz2z   2/2       Running             0          26m
-web-ztksx   0/2       ContainerCreating   0          3s
 web1        2/2       Running             0          1h
 ``` 
+
 Time to put to test out python and redis application.
+
 ```console
 $ kubectl get svc
 NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
@@ -472,9 +442,11 @@ service "mysql" deleted
 replicationcontroller "web" deleted
 service "web" deleted
 ```
+
 Now that the everything is clean, let's start.
+
 ```console
-4 kubectl create -f db-pod.yaml -f db-svc.yaml -f web-rc.yaml -f web-svc.yaml
+$ kubectl create -f db-pod.yaml -f db-svc.yaml -f web-rc.yaml -f web-svc.yaml
 pod "mysql" created
 service "mysql" created
 replicationcontroller "web" created
@@ -489,16 +461,40 @@ $ kubectl get svc
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
 kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        8d
 mysql        ClusterIP   10.111.177.68   <none>        3306/TCP       33s
-web          NodePort    10.106.191.29   <none>        80:31265/TCP   33s
+web          NodePort    10.106.191.29   <none>        80:32286/TCP   33s
 ```
-We have a series of inserts to issue to populate the database.
-#### WIP
-<!--
-```console
 
-``` 
--->
+We have a series of inserts to issue to populate the database.
+
+```console
+curl http://192.168.99.100:32286/init
+```
+
+Insert user
+
+```console
+curl -H "Content-Type: application/json" -X POST -d '{"uid": "1", "user": "jon snow"}' http://192.168.99.100:32286/users/add
+```
+
+Query user
+
+```console
+curl http://192.168.99.100:32286/users/1
+$ jon snow
+```
+
+## Clear Lab
+
+```console
+kubectl delete -f db-pod.yaml -f db-svc.yaml -f web-rc.yaml -f web-svc.yaml
+$ pod "mysql" deleted
+$ service "mysql" deleted
+$ replicationcontroller "web" deleted
+$ service "web" deleted
+```
+
 ## Summary
+
 * Pods are the smallest unit of deployment in Kubernetes
 * Multiple containers share the context of a Pod
 * Replica Set are the next generation Replication Controllers
@@ -506,7 +502,3 @@ We have a series of inserts to issue to populate the database.
 
 Reference:
 * [Kubernetes Webinar Series - A Closer Look at Pods and Replicas](https://www.youtube.com/watch?v=CU-nNEY6Hfg&index=3&list=PLF3s2WICJlqOiymMaTLjwwHz-MSVbtJPQ)
-
-<!--
-https://github.com/janakiramm/Kubernetes-multi-container-pod
--->

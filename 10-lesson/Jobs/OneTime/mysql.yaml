@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
     - name: mysql
-      image: mysql
+      image: mysql:5.7.26
       env:
        - name: MYSQL_ROOT_PASSWORD
          value: password 
@@ -23,27 +23,11 @@ metadata:
     app: myapp
     tier: data
 spec:
-  ports:
-    - port: 3306
-      name: mysql
-      targetPort: 3306
-      protocol: TCP
-  selector:
-    app: myapp
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-external
-  labels:
-    app: myapp
-    tier: data
-spec:
   type: NodePort
   ports:
     - port: 3306
-      name: mysql-ext
       targetPort: 3306
+      nodePort: 30306
       protocol: TCP
   selector:
     app: myapp

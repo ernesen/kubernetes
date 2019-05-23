@@ -1,9 +1,9 @@
-apiVersion: batch/v2alpha1
+apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: hello
 spec:
-  schedule: "*/1 * * * *"
+  schedule: "*/1 * * * *" # every 1 minute
   jobTemplate:
     spec:
       template:
@@ -14,5 +14,5 @@ spec:
             args:
             - /bin/sh 
             - -c 
-            - data; echo Hello from Kubernetes cluster
+            - date; echo Hello from Kubernetes cluster
           restartPolicy: OnFailure

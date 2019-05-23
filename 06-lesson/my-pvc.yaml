@@ -1,10 +1,26 @@
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata: 
+#   name: my-pvc
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Gi  
+
+---
 kind: PersistentVolumeClaim
 apiVersion: v1
-metadata: 
+metadata:
   name: my-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
+  storageClassName: manual
   resources:
     requests:
-      storage: 1Gi  
+      storage: 1Gi
+  selector:
+    matchLabels:
+      type: local
