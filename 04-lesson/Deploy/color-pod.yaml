@@ -6,7 +6,7 @@ metadata:
     color: red
 spec:
   containers:
-    - image: janakiramm/color
+    - image: aldredb/node_color:1
       name: red
       env:
         - name: "COLOR"
@@ -22,7 +22,7 @@ metadata:
     color: green
 spec:
   containers:
-    - image: janakiramm/color
+    - image: aldredb/node_color:1
       name: green
       env:
         - name: "COLOR"
@@ -38,7 +38,7 @@ metadata:
     color: blue
 spec:
   containers:
-    - image: janakiramm/color
+    - image: aldredb/node_color:1
       name: blue
       env:
         - name: "COLOR"
@@ -54,7 +54,7 @@ metadata:
     color: yellow
 spec:
   containers:
-    - image: janakiramm/color
+    - image: aldredb/node_color:1
       name: yellow
       env:
         - name: "COLOR"

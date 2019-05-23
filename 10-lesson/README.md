@@ -36,6 +36,7 @@
 ### Exploring Daemon Set
 Let's build the replicaset
 ```console
+$ cd DaemonSet
 $ kubectl create -f nginx-rs.yaml
 replicaset "nginx" created
 ``` 
@@ -78,10 +79,11 @@ Ok, now we start working on the daemonset; as stated earlier, because I only hav
 ```console
 $ kubectl create -f nginx-ds.yaml
 daemonset "nginx" created
+$ kubectl get pods -o wide
 NAME          READY     STATUS    RESTARTS   AGE       IP           NODE
 nginx-6ctfr   1/1       Running   0          39m       172.17.0.7   minikube
 $ kubectl scale --replicas=10 ds/nginx
-error: no scaler has been implemented for {"extensions" "DaemonSet"}
+Error from server (NotFound): the server could not find the requested resource
 $ kubectl delete ds nginx
 daemonset "nginx" deleted
 ```
@@ -109,31 +111,29 @@ daemonset "nginx" deleted
 ## Demo
 ### Using Run to Complete Jobs
 ```console
+$ cd Jobs/OneTime
 $ kubectl create -f mysql.yaml
-pod "mysql" created
-service "mysql" created
-service "mysql-external" created
+pod/mysql created
+service/mysql created
 $ kubectl get po
 NAME      READY     STATUS    RESTARTS   AGE
 mysql     1/1       Running   0          3m
 $ kubectl get svc
 NAME             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-kubernetes       ClusterIP   10.96.0.1        <none>        443/TCP          11d
-mysql            ClusterIP   10.108.152.138   <none>        3306/TCP         3m
-mysql-external   NodePort    10.99.185.195    <none>        3306:31949/TCP   3m
+kubernetes   ClusterIP   10.96.0.1     <none>        443/TCP          17h
+mysql        NodePort    10.96.56.40   <none>        3306:30306/TCP   24s
 ```
-Now, i's time to test the mysql connection, previously I installed MyQSL on my laptop.
+
+Now, it's time to test the mysql connection
+
 ```console
-$ mysql -u root -ppassword -h 192.168.99.100 -P 31949 -e "show databases"
+$ kubectl exec mysql -- mysql -u root -ppassword -e 'show databases'
 mysql: [Warning] Using a password on the command line interface can be insecure.
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
+Database
+information_schema
+mysql
+performance_schema
+sys
 ```
 
 ```console
@@ -145,17 +145,14 @@ db-init-b8mpr   0/1       Completed   0          3m
 mysql           1/1       Running     0          5h
 $ kubectl logs db-init-b8mpr
 mysql: [Warning] Using a password on the command line interface can be insecure.
-$ mysql -u root -ppassword -h 192.168.99.100 -P 31949 -e "show databases"
+$ kubectl exec mysql -- mysql -u root -ppassword -e 'show databases'
 mysql: [Warning] Using a password on the command line interface can be insecure.
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| cloudshop          |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
+Database
+information_schema
+cloudshop
+mysql
+performance_schema
+sys
 $ kubectl describe job db-init
 Name:           db-init
 Namespace:      default
@@ -186,7 +183,15 @@ Events:
   ----    ------            ----  ----            -------
   Normal  SuccessfulCreate  7m    job-controller  Created pod: db-init-b8mpr
 ```
+
+Clear environment
+
+```console
+kubectl delete -f mysql.yaml -f db-init-job.yaml
+```
+
 ## Configuring Cron Jobs
+
 - A Cron Job manages time based Jobs
 	- Once at a specified point in time
 	- Repeatedly at a specified point in time
@@ -201,22 +206,28 @@ Events:
 ## Demo
 ### Using Cron Jobs
 ```console
+$ cd Jobs/Cron
 $ kubectl create -f cron.yaml
-cronjob "hello" created
+cronjob.batch/hello created
 $ kubectl get cronjob hello
-NAME      SCHEDULE      SUSPEND   ACTIVE    LAST SCHEDULE   AGE
-hello     */1 * * * *   False     0         Thu, 14 Dec 2017 18:22:00 +0800
-$ kubectl get jobs --watch
-NAME               DESIRED   SUCCESSFUL   AGE
-db-init            1         1            1h
-hello-1513247040   1         1            2m
-hello-1513247100   1         1            1m
-hello-1513247160   1         1            15s
+NAME    SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+hello   */1 * * * *   False     0        10s             93s
+$ kubectl get job --watch
+NAME               COMPLETIONS   DURATION   AGE
+hello-1558490820   1/1           7s         104s
+hello-1558490880   1/1           6s         44s
+$ pod=$(kubectl get pods --selector=job-name=hello-1558490820 --output=jsonpath={.items[].metadata.name})
+$ kubectl logs $pod
+Wed May 22 02:07:06 UTC 2019
+Hello from Kubernetes cluster
 ```
+
 Clean up
+
 ```console
 λ kubectl delete cronjob hello
 cronjob "hello" deleted
 ```
+
 Reference:
 - [Kubernetes Webinar Series - Exploring Daemon Sets and Jobs](https://www.youtube.com/watch?v=qYvXwWT-13w&index=10&list=PLF3s2WICJlqOiymMaTLjwwHz-MSVbtJPQ)

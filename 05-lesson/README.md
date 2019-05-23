@@ -64,7 +64,7 @@ spec:
 		- containerPort: 80
 ```
 ```console
-$ kubectl create -f docs/user-guide/nginx-deployment.yaml --record
+$ kubectl create -f nginx-deployment.yaml
 deployment "nginx-deployment" created
 
 $ kubectl get deployments
@@ -78,11 +78,18 @@ $ kubectl rollout status deployment/nginx-deployment
 Waiting for rollout to finish: 2 out of 3 new replicas have been updated...
 deployment "nginx-deployment" successfully rolled out
 ```
+
+Clean up
+
+```console
+kubectl delete -f nginx-deployment.yaml
+```
+
 ## Demo
 ### Using Deployments
 ```bash
 # Create the deployment
-$ kubectl create -f j-hello.yaml -f j-hello-svc.yaml --validate=false
+$ kubectl create -f j-hello.yaml -f j-hello-svc.yaml
 
 # List the deployment
 $ kubectl get deployments
@@ -135,9 +142,9 @@ $ kubectl delete service j-hello
 ```
 
 ```console
-$ kubectl create -f j-hello.yaml --validate=false
+$ kubectl create -f j-hello.yaml
 deployment "j-hello" created
-$ kubectl create -f j-hello-svc.yaml --validate=false
+$ kubectl create -f j-hello-svc.yaml
 service "j-hello" created
 $ kubectl get deployments
 NAME      DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
@@ -193,6 +200,8 @@ $ kubectl rollout status deploy/j-hello
 deployment "j-hello" successfully rolled out
 $ kubectl rollout pause deploy/j-hello
 deployment "j-hello" paused
+$ kubectl set image deployment j-hello j-hello=janakiramm/j-hello:2
+deployment.extensions/j-hello image updated
 $ kubectl rollout status deploy/j-hello
 Waiting for rollout to finish: 0 out of 10 new replicas have been updated...
 $ kubectl rollout resume deployment/j-hello
@@ -236,10 +245,11 @@ Waiting for rollout to finish: 1 old replicas are pending termination...
 Waiting for rollout to finish: 9 of 10 updated replicas are available...
 deployment "j-hello" successfully rolled out
 ```
-Running a script so that we can test the load, some will show v1 while other on v2; a nice way to perform updrades.
+
+In another console, run a script so that we can test the load, some will show v1 while other on v2; a nice way to perform updrades.
 
 ```console
-$ while true; do curl 192.168.99.100:$NODE_PORT; printf '%s\r\n'; sleep 1; done
+$ while true; do curl 192.168.99.100:30001; printf '%s\r\n'; sleep 1; done
 Hello World!
 Hello World v2!
 Hello World!
@@ -258,7 +268,9 @@ Hello World v2!
 Hello World!
 Hello World v2!
 ```
+
 Take a scenario where we might not be happy with the latest release and would like to rollback, the steps below will do just that.
+
 ```console
 $ kubectl rollout history deployment j-hello
 deployments "j-hello"
@@ -266,11 +278,13 @@ REVISION  CHANGE-CAUSE
 1         <none>
 2         <none>
 ```
+
 We are going back to the previous deployment, as shown above we have two revisions.
+
 ```console
 $ kubectl rollout undo deploy/j-hello
 deployment "j-hello" rolled back
-$ kubectl get po -w
+$ watch kubectl get pods
 NAME                      READY     STATUS    RESTARTS   AGE
 j-hello-cfcd7f654-2hn85   1/1       Running   0          24m
 j-hello-cfcd7f654-2jw2h   1/1       Running   0          25m
@@ -347,6 +361,7 @@ j-hello-cfcd7f654-qgv4q   0/1       Terminating   0         26m
 j-hello-cfcd7f654-2jw2h   0/1       Terminating   0         27m
 j-hello-cfcd7f654-6rjm4   0/1       Terminating   0         27m
 ```
+
 From a separate terminal, we would run this command to monitor the rollback progress, where eventually all will be rolled back to v1.
 
 ```console
@@ -407,14 +422,18 @@ Hello World!
 Hello World!
 Hello World!
 ```
+
 Time to clean up and run the delete commands for deployments and services.
+
 ```console
 $ kubectl delete deployment j-hello
 deployment "j-hello" deleted
 $ kubectl delete service j-hello
 service "j-hello" deleted
 ```
+
 Let's verify that all the services and deployments are deleted and get ready for the next set of demos.
+
 ```console
 $ kubectl get po
 No resources found.
@@ -422,6 +441,7 @@ $ kubectl get svc -n default
 NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)     AGE
 kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP     9d
 ```
+
 ## Demo
 ### Canary deployment
 Canary deployment is a pattern for reducing risk involved with releasing new software versions. But in software, releasing canaries can be a strategic tactic for teams adopting continuous delivery practices.
@@ -439,8 +459,7 @@ $ kubectl create -f j-hello.yaml -f j-hello-svc.yaml --validate=false
 $ kubectl get deployments --watch
 
 # Access the pod
-$ export NODE_PORT=30001 
-$ curl 192.168.99.100:$NODE_PORT 
+$ curl 192.168.99.100:30001
 
 # Scale the deployment 
 $ kubectl scale deployment j-hello --replicas 10
@@ -464,6 +483,7 @@ $ kubectl rollout resume deployment/j-hello
 $ kubectl delete deployment j-hello
 $ kubectl delete service j-hello
 ```
+
 Let's get started with the demo
 ```console
 $ kubectl create -f j-hello.yaml -f j-hello-svc.yaml --validate=false
@@ -493,6 +513,7 @@ j-hello   10        10        10        8         6m
 j-hello   10        10        10        9         6m
 j-hello   10        10        10        10        6m
 ```
+
 Let's check the status of our deployment...
 
 ```console
@@ -543,7 +564,7 @@ deployment "j-hello" paused
 As stated earlier, we have **4/10** running on v2, shown below is a good indication that the canary deployment is working as stated.
 
 ```console
-$ while true; do curl 192.168.99.100:$NODE_PORT; printf '%s\r\n'; sleep 1; done
+$ while true; do curl 192.168.99.100:30001; printf '%s\r\n'; sleep 1; done
 Hello World v2!
 Hello World!
 Hello World!
@@ -555,14 +576,18 @@ Hello World!
 Hello World!
 Hello World v2!
 ```
+
 Let's resume this  and have it run at 100%, follow the steps below:
+
 ```console
 $ kubectl rollout resume deployment/j-hello
 deployment "j-hello" resumed
 ```
+
 We go back to running our curl command to see that all is running on the latest version v2.
+
 ```console
-$ while true; do curl 192.168.99.100:$NODE_PORT; printf '%s\r\n'; sleep 1; done
+$ while true; do curl 192.168.99.100:30001; printf '%s\r\n'; sleep 1; done
 Hello World v2!
 Hello World v2!
 Hello World v2!
@@ -576,6 +601,7 @@ Hello World v2!
 ```
 This concludes our demo on canary deployment with Kubernetes...
 Deleting the service and deployment
+
 ```console
 $ kubectl delete deployment j-hello
 deployment "j-hello" deleted
@@ -584,6 +610,7 @@ service "j-hello" deleted
 ```
 
 ## Summary
+
 - Overview of RelicaSets
 - What are Deployments
 - Why use Deployments
@@ -592,5 +619,3 @@ service "j-hello" deleted
 
 Reference:
 - [Kubernetes Webinar Series - Scaling and Managing Deployments](https://www.youtube.com/watch?v=HTA5LihRIoA&list=PLF3s2WICJlqOiymMaTLjwwHz-MSVbtJPQ&index=5)
-- [Kubernetes Canary deployments for mere mortals](https://medium.com/google-cloud/kubernetes-canary-deployments-for-mere-mortals-13728ce032fe)
-

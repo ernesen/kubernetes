@@ -10,7 +10,7 @@ spec:
         color: red
     spec:
       containers:
-        - image: ernesen/node:v1
+        - image: aldredb/node_color:1
           name: red
           env:
             - name: "COLOR"
@@ -30,7 +30,7 @@ spec:
         color: green
     spec:
       containers:
-        - image: ernesen/node:v1
+        - image: aldredb/node_color:1
           name: green
           env:
             - name: "COLOR"
@@ -50,7 +50,7 @@ spec:
         color: blue
     spec:
       containers:
-        - image: ernesen/node:v1
+        - image: aldredb/node_color:1
           name: blue
           env:
             - name: "COLOR"
@@ -70,7 +70,7 @@ spec:
         color: yellow
     spec:
       containers:
-        - image: ernesen/node:v1
+        - image: aldredb/node_color:1
           name: yellow
           env:
             - name: "COLOR"

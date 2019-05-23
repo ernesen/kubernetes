@@ -37,7 +37,7 @@ No Pods, Services and ReplicationControllers are running, as all were deleted be
 ```console
 $ kubectl get po
 No resources found.
-$ ls
+$ cd Deploy && ls
 Dockerfile  app.js  color-pod.yaml  color-rc.yaml  color-svc.yaml
 $ kubectl create -f color-pod.yaml -f color-rc.yaml
 pod "red" created
@@ -135,11 +135,31 @@ Events:                   <none>
 $ curl 192.168.99.100:31001
 {"color":"red"}
 ```
+
 This is a tangible proof that the color coded services work...
 
 |![Red](./images/image-04-02.png) |![Green](./images/image-04-03.png) |![Blue](./images/image-04-04.png) |![Yellow](./images/image-04-05.png)|
 
+Clear the environment
+
+```console
+kubectl delete -f color-pod.yaml -f color-rc.yaml -f color-svc.yaml
+$ pod "red" deleted
+$ pod "green" deleted
+$ pod "blue" deleted
+$ pod "yellow" deleted
+$ replicationcontroller "red" deleted
+$ replicationcontroller "green" deleted
+$ replicationcontroller "blue" deleted
+$ replicationcontroller "yellow" deleted
+$ service "red" deleted
+$ service "green" deleted
+$ service "blue" deleted
+$ service "yellow" deleted
+```
+
 ## Discovering Service - DNS
+
 * The DNS Server watches Kubernetes API for new Services
 * The DNS Server creates a set of DNS records for each Service
 * Services can be resolved by the name within the same namespace
@@ -160,7 +180,8 @@ This is a tangible proof that the color coded services work...
 ## Demo
 ### Exposing a Service Internally and Externally
 ```console
-$ kubectl create -f db-pod.yaml -f db-svc.yaml -f web-pod.yaml -f web-rc.yaml -f web-svc.yaml --validate=false
+cd ../todo-app
+$ kubectl create -f db-pod.yaml -f db-svc.yaml -f web-pod.yaml -f web-rc.yaml -f web-svc.yaml
 pod "db" created
 service "db" created
 pod "web" created
@@ -195,13 +216,9 @@ Events:                   <none>
 ```
 
 I'll call the service via minikube.
+
 ```console
 λ minikube service web
-There is a newer version of minikube available (v0.24.1).  Download it here:
-https://github.com/kubernetes/minikube/releases/tag/v0.24.1
-
-To disable this notification, run the following:
-minikube config set WantUpdateNotification false
 Opening kubernetes service default/web in default browser...
 ```
 
@@ -245,6 +262,18 @@ WEB_SERVICE_HOST=10.108.13.113
 # ping db
 PING db.default.svc.cluster.local (10.110.111.84): 56 data bytes
 ```
+
+## Clear Lab
+
+```console
+kubectl delete -f db-pod.yaml -f db-svc.yaml -f web-pod.yaml -f web-rc.yaml -f web-svc.yaml
+$ pod "db" deleted
+$ service "db" deleted
+$ pod "web" deleted
+$ replicationcontroller "web" deleted
+$ service "web" deleted
+```
+
 ## Summary
 * What is a Kubernetes Service
 * Service Discovery through Environment Variables
