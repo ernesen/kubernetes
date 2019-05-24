@@ -6,7 +6,12 @@ build.sh
 index.html
 index2.html
 Reading-Kubernetes
-07-lesson
+*.zip
+*.tar
+*.rar
+*.key
+*.csr
+*.crt
 
 # new releases
 12-lesson
