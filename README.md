@@ -42,6 +42,7 @@ Learning Kubernetes from Kubernetes Webinar Series
 
 [19 - Kubernetes Webinar Series - Continuous Delivery and Deployment](./README.md)
 
+[20 - Kubernetes Webinar Series - OpenShift Tips and Tricks of Using oc, the OpenShift CLI](./README.md)
 <!--
 [11 - Kubernetes Webinar Series - Tips and Tricks of Using Kubectl, the Kubernetes CLI](https://www.youtube.com/watch?v=BadzJOlSn24&list=PLF3s2WICJlqOiymMaTLjwwHz-MSVbtJPQ&index=11)
 
