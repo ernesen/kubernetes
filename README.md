@@ -16,9 +16,9 @@ Learning Kubernetes from Kubernetes Webinar Series
 
 [06 - Kubernetes Webinar Series - Dealing with Storage and Persistence](./06-lesson/README.md)
 
-[07 - Controlling user access using Role Based Access Control (RBAC)](./07-lesson/README.md)
+[07 - Kubernetes Webinar Series - Controlling user access using Role Based Access Control (RBAC)](./07-lesson/README.md)
 
-[08 - Deploying Stateful Application with StatefulSet](./08-lesson/README.md)
+[08 - Kubernetes Webinar Series - Deploying Stateful Application with StatefulSet](./08-lesson/README.md)
 
 [09 - Kubernetes Webinar Series - Using ConfigMaps & Secrets in Kubernetes](./09-lesson/README.md)
 
