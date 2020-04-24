@@ -26,7 +26,6 @@ Learning Kubernetes from Kubernetes Webinar Series
 
 [11 - Kubernetes Webinar Series - Tips and Tricks of Using Kubectl, the Kubernetes CLI](./11-lesson/README.md)
 
-<!--
 [12 - Kubernetes Webinar Series - Everything About Ingress](./12-lesson/README.md)
 
 [13 - Kubernetes Webinar Series - Building CI CD Pipelines with Jenkins and Kubernetes](./13-lesson/README.md)
@@ -35,6 +34,15 @@ Learning Kubernetes from Kubernetes Webinar Series
 
 [15 - Kubernetes Webinar Series - Continuous Deployment on Kubernetes with Spinnaker](./15-lesson/README.md)
 
+[15 - Kubernetes for CloudFoundry users]
+
+[15 - DevOps Concepts]
+
+[15 - Continuous Integration]
+
+[15 - Continuous Delivery and Deployment]
+
+<--
 [11 - Kubernetes Webinar Series - Tips and Tricks of Using Kubectl, the Kubernetes CLI](https://www.youtube.com/watch?v=BadzJOlSn24&list=PLF3s2WICJlqOiymMaTLjwwHz-MSVbtJPQ&index=11)
 
 [12 - Kubernetes Webinar Series - Everything About Ingress](https://www.youtube.com/watch?v=HwogE64wjmw&list=PLF3s2WICJlqOiymMaTLjwwHz-MSVbtJPQ&index=12)
