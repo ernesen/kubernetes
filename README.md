@@ -34,13 +34,13 @@ Learning Kubernetes from Kubernetes Webinar Series
 
 [15 - Kubernetes Webinar Series - Kubernetes Webinar Series - Continuous Deployment on Kubernetes with Spinnaker](./15-lesson/README.md)
 
-[15 - Kubernetes Webinar Series - Kubernetes for CloudFoundry users](./README.md)
+[16 - Kubernetes Webinar Series - Kubernetes for CloudFoundry users](./README.md)
 
-[15 - Kubernetes Webinar Series - DevOps Concepts](./README.md)
+[17 - Kubernetes Webinar Series - DevOps Concepts](./README.md)
 
-[15 - Kubernetes Webinar Series - Continuous Integration](./README.md)
+[18 - Kubernetes Webinar Series - Continuous Integration](./README.md)
 
-[15 - Kubernetes Webinar Series - Continuous Delivery and Deployment](./README.md)
+[19 - Kubernetes Webinar Series - Continuous Delivery and Deployment](./README.md)
 
 <!--
 [11 - Kubernetes Webinar Series - Tips and Tricks of Using Kubectl, the Kubernetes CLI](https://www.youtube.com/watch?v=BadzJOlSn24&list=PLF3s2WICJlqOiymMaTLjwwHz-MSVbtJPQ&index=11)
