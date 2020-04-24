@@ -42,7 +42,7 @@ Learning Kubernetes from Kubernetes Webinar Series
 
 [15 - Continuous Delivery and Deployment]
 
-<--
+<!--
 [11 - Kubernetes Webinar Series - Tips and Tricks of Using Kubectl, the Kubernetes CLI](https://www.youtube.com/watch?v=BadzJOlSn24&list=PLF3s2WICJlqOiymMaTLjwwHz-MSVbtJPQ&index=11)
 
 [12 - Kubernetes Webinar Series - Everything About Ingress](https://www.youtube.com/watch?v=HwogE64wjmw&list=PLF3s2WICJlqOiymMaTLjwwHz-MSVbtJPQ&index=12)
